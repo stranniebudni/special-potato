@@ -1,0 +1,25 @@
+import time
+from collections import deque
+user_text = 'ы'
+
+print('Введите свой никнейм')
+name = input()
+print('Сколько последних сообщение вы хотите видеть?')
+limit_num = int(input())
+
+while user_text != 'стоп':
+    with open('test.txt') as f:
+        for i in deque(f, limit_num):
+            print(i.strip())
+
+    with open('test.txt', 'a') as f:
+        named_tuple = time.localtime()
+        time_string = time.strftime("%H:%M:%S", named_tuple)
+        user_text = input()
+        if user_text == 'стоп':
+            f.close()
+        elif (user_text == 'rel') or (user_text == 'обнови'):
+            f.close()
+        else:
+            f.write(user_text + ' [' + name + '] ' + '(' + time_string + ')' + '\n')
+            f.close()
